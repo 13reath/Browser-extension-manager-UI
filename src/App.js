@@ -5,16 +5,73 @@ export default function App() {
   const [extension, setExtension] = useState(data);
 
   return (
-    <main>
+    <main className="card">
       <div className="header">
-        <img src="" alt="logo" />
-        <img src="" alt="theme" />
+        <img
+          className="logo"
+          src={process.env.PUBLIC_URL + "./assets/images/logo.svg"}
+          alt="logo"
+        />
+        <img
+          className="theme"
+          src={process.env.PUBLIC_URL + "./assets/images/icon-sun.svg"}
+          alt="theme"
+        />
       </div>
-      <div className="List">
+      <div className="list">
         <h1>Extensions List</h1>
-        <div className="list-button">All</div>
-        <div className="list-button">Active</div>
-        <div className="list-button">Inactive</div>
+        <div className="list-buttons">
+          <div className="list-button active">All</div>
+          <div className="list-button">Active</div>
+          <div className="list-button">Inactive</div>
+        </div>
+      </div>
+      <div className="extensions">
+        <div className="extension-card">
+          <div className="extension-header">
+            <img
+              src={process.env.PUBLIC_URL + "./assets/images/logo-devlens.svg"}
+              alt="DevLens"
+            />
+            <div className="extension-info">
+              <h3>DevLens</h3>
+              <p>
+                Quickly inspect page layouts and visualize element boundaries.
+              </p>
+            </div>
+          </div>
+
+          <div className="extension-footer">
+            <button className="remove-button">Remove</button>
+            <label className="extension-toggle">
+              <input type="checkbox" checked readOnly />
+              <span className="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div className="extension-card">
+          <div className="extension-header">
+            <img
+              src={process.env.PUBLIC_URL + "./assets/images/logo-devlens.svg"}
+              alt="DevLens"
+            />
+            <div className="extension-info">
+              <h3>DevLens</h3>
+              <p>
+                Quickly inspect page layouts and visualize element boundaries.
+              </p>
+            </div>
+          </div>
+
+          <div className="extension-footer">
+            <button className="remove-button">Remove</button>
+            <label className="extension-toggle">
+              <input type="checkbox" checked readOnly />
+              <span className="slider"></span>
+            </label>
+          </div>
+        </div>
       </div>
     </main>
   );
