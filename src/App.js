@@ -31,7 +31,7 @@ export default function App() {
         <SvgIcon />
         <img
           className="theme"
-          src={process.env.PUBLIC_URL + "./assets/images/icon-sun.svg"}
+          src={process.env.PUBLIC_URL + "/assets/images/icon-sun.svg"}
           alt="theme"
         />
       </div>
@@ -89,7 +89,7 @@ function Extension({ name, description, logo, isActive, onToggle, onRemove }) {
   return (
     <div className="extension-card">
       <div className="extension-header">
-        <img src={process.env.PUBLIC_URL + logo} alt="DevLens" />
+        <img src={process.env.PUBLIC_URL + "/" + logo} alt={name} />
         <div className="extension-info">
           <h3>{name}</h3>
           <p>{description}</p>
