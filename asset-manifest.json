@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Browser-extension-manager-UI/static/css/main.b3d8f4fe.css",
-    "main.js": "/Browser-extension-manager-UI/static/js/main.6e587dc3.js",
+    "main.js": "/Browser-extension-manager-UI/static/js/main.1fb65ba0.js",
     "index.html": "/Browser-extension-manager-UI/index.html",
     "main.b3d8f4fe.css.map": "/Browser-extension-manager-UI/static/css/main.b3d8f4fe.css.map",
-    "main.6e587dc3.js.map": "/Browser-extension-manager-UI/static/js/main.6e587dc3.js.map"
+    "main.1fb65ba0.js.map": "/Browser-extension-manager-UI/static/js/main.1fb65ba0.js.map"
   },
   "entrypoints": [
     "static/css/main.b3d8f4fe.css",
-    "static/js/main.6e587dc3.js"
+    "static/js/main.1fb65ba0.js"
   ]
 }
