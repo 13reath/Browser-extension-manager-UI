@@ -1,17 +1,34 @@
 import data from "./data.json";
 import { useState } from "react";
+import SvgIcon from "./SvgIcon";
 
 export default function App() {
-  const [extension, setExtension] = useState(data);
+  const [extensions, setExtensions] = useState(data);
+  const [group, setGroup] = useState("all");
+
+  function toggleActive(name) {
+    const toggle = extensions.map((ext) =>
+      ext.name === name ? { ...ext, isActive: !ext.isActive } : ext
+    );
+    setExtensions(toggle);
+  }
+
+  const groupedExtensions = function groupExtensions(exts) {
+    if (group === "all") return exts;
+    if (group === "active") return exts.filter((ext) => ext.isActive === true);
+    if (group === "inactive")
+      return exts.filter((ext) => ext.isActive === false);
+  };
+
+  function removeButton(name) {
+    const updated = extensions.filter((ext) => ext.name !== name);
+    setExtensions(updated);
+  }
 
   return (
     <main className="card">
       <div className="header">
-        <img
-          className="logo"
-          src={process.env.PUBLIC_URL + "./assets/images/logo.svg"}
-          alt="logo"
-        />
+        <SvgIcon />
         <img
           className="theme"
           src={process.env.PUBLIC_URL + "./assets/images/icon-sun.svg"}
@@ -21,106 +38,77 @@ export default function App() {
       <div className="list">
         <h1>Extensions List</h1>
         <div className="list-buttons">
-          <div className="list-button active">All</div>
-          <div className="list-button">Active</div>
-          <div className="list-button">Inactive</div>
-        </div>
-      </div>
-      <div className="extensions">
-        <div className="extension-card">
-          <div className="extension-header">
-            <img
-              src={process.env.PUBLIC_URL + "./assets/images/logo-devlens.svg"}
-              alt="DevLens"
-            />
-            <div className="extension-info">
-              <h3>DevLens</h3>
-              <p>
-                Quickly inspect page layouts and visualize element boundaries.
-              </p>
-            </div>
+          <div
+            className={`list-button ${group === "all" ? "active" : ""}`}
+            onClick={() => setGroup("all")}
+          >
+            All
           </div>
-
-          <div className="extension-footer">
-            <button className="remove-button">Remove</button>
-            <label className="extension-toggle">
-              <input type="checkbox" checked readOnly />
-              <span className="slider"></span>
-            </label>
+          <div
+            className={`list-button ${group === "active" ? "active" : ""}`}
+            onClick={() => setGroup("active")}
+          >
+            Active
           </div>
-        </div>
-
-        <div className="extension-card">
-          <div className="extension-header">
-            <img
-              src={process.env.PUBLIC_URL + "./assets/images/logo-devlens.svg"}
-              alt="DevLens"
-            />
-            <div className="extension-info">
-              <h3>DevLens</h3>
-              <p>
-                Quickly inspect page layouts and visualize element boundaries.
-              </p>
-            </div>
-          </div>
-
-          <div className="extension-footer">
-            <button className="remove-button">Remove</button>
-            <label className="extension-toggle">
-              <input type="checkbox" checked readOnly />
-              <span className="slider"></span>
-            </label>
+          <div
+            className={`list-button ${group === "inactive" ? "active" : ""}`}
+            onClick={() => setGroup("inactive")}
+          >
+            Inactive
           </div>
         </div>
       </div>
+      <Extensions
+        array={groupedExtensions(extensions)}
+        toggleActive={toggleActive}
+        removeButton={removeButton}
+      />
     </main>
   );
 }
 
-// DevLens
-// Quickly inspect page layouts and visualize element boundaries.
-// Remove
+function Extensions({ array, toggleActive, removeButton }) {
+  return (
+    <div className="extensions">
+      {array.map((ext) => (
+        <Extension
+          key={ext.name}
+          name={ext.name}
+          description={ext.description}
+          logo={ext.logo}
+          isActive={ext.isActive}
+          onToggle={toggleActive}
+          onRemove={removeButton}
+        />
+      ))}
+    </div>
+  );
+}
 
-// StyleSpy
-// Instantly analyze and copy CSS from any webpage element.
-// Remove
+function Extension({ name, description, logo, isActive, onToggle, onRemove }) {
+  return (
+    <div className="extension-card">
+      <div className="extension-header">
+        <img src={process.env.PUBLIC_URL + logo} alt="DevLens" />
+        <div className="extension-info">
+          <h3>{name}</h3>
+          <p>{description}</p>
+        </div>
+      </div>
 
-// SpeedBoost
-// Optimizes browser resource usage to accelerate page loading.
-// Remove
-
-// JSONWizard
-// Formats, validates, and prettifies JSON responses in-browser.
-// Remove
-
-// TabMaster Pro
-// Organizes browser tabs into groups and sessions.
-// Remove
-
-// ViewportBuddy
-// Simulates various screen resolutions directly within the browser.
-// Remove
-
-// Markup Notes
-// Enables annotation and notes directly onto webpages for collaborative debugging.
-// Remove
-
-// GridGuides
-// Overlay customizable grids and alignment guides on any webpage.
-// Remove
-
-// Palette Picker
-// Instantly extracts color palettes from any webpage.
-// Remove
-
-// LinkChecker
-// Scans and highlights broken links on any page.
-// Remove
-
-// DOM Snapshot
-// Capture and export DOM structures quickly.
-// Remove
-
-// ConsolePlus
-// Enhanced developer console with advanced filtering and logging.
-// Remove
+      <div className="extension-footer">
+        <button onClick={() => onRemove(name)} className="remove-button">
+          Remove
+        </button>
+        <label className="extension-toggle">
+          <input
+            type="checkbox"
+            checked={isActive}
+            onChange={() => onToggle(name)}
+          />
+          <span className="slider"></span>
+        </label>
+      </div>
+    </div>
+  );
+}
